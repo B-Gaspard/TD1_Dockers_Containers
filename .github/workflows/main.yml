@@ -53,7 +53,7 @@ jobs:
       - name: Build image and push database
         uses: docker/build-push-action@v6
         with:
-          context: Docker_Containers/TP1/database
+          context: Docker_Containers/TP1/postgresdb
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ secrets.DOCKER_USERNAME }}/tp-devops-database:latest
 
