@@ -1,0 +1,30 @@
+Docker Container TD1:
+#check doccker
+docker run hello-world
+
+docker pull alpine
+docker images
+
+docker run alpine ls -l
+
+docker run alpine echo "hello from alpine"  
+
+docker run alpine /bin/sh
+	ls -l #list
+	uname -a #Linux ab51530aa87d 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun  518:30:4UTC20
+
+
+docker run -it alpine /bin/sh
+
+docker ps -a #list of container that were ran
+
+#"docker run --help" to know more
+
+2.1 Run a static website in a containe
+docker run -d dockersamples/static-site
+
+docker ps
+
+#Stop and remove containers
+docker stop CONTAINER ID
+docker rm CONTAINER ID
