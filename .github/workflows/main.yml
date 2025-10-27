@@ -30,4 +30,4 @@ jobs:
 
       # Step 4: Build and test with Maven
       - name: Build and test with Maven
-        run: mvn clean verify --file simpleapi/pom.xml
+        run: mvn clean verify --file Docker_Containers/TP1/simpleapi/pom.xml
