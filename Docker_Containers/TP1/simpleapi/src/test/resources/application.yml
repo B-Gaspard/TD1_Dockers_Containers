@@ -1,13 +1,13 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://my-postgres:5432/postgres
-    username: postgres
-    password: password
   jpa:
-    hibernate:
-      ddl-auto: none
-    show-sql: true
     properties:
-      hibernate.format_sql: true
-server:
-  port: 8080
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    generate-ddl: false
+  datasource:
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:postgresql://hostname/simple-api
+    username: ${embedded.postgresql.user}
+    password: ${embedded.postgresql.password}
