@@ -8,6 +8,6 @@
       - name: db_network      # connects to database
       - name: app_network     # connects to proxy
     env:
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://my_db:5432/postgres"
-      SPRING_DATASOURCE_USERNAME: "postgres"
-      SPRING_DATASOURCE_PASSWORD: "password"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://{{ VAULT_DB_SERVER }}:5432/{{ VAULT_DB_NAME }}"
+      SPRING_DATASOURCE_USERNAME: "{{ VAULT_DB_USERNAME }}"
+      SPRING_DATASOURCE_PASSWORD: "{{ VAULT_DB_PASSWORD }}"

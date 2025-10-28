@@ -7,7 +7,7 @@
     networks:
       - name: db_network
     env:
-      DB_USER: "postgres"
-      DB_PASSWORD: "password"
-      DB_NAME: "postgres"
+      DB_USER: "{{ VAULT_DB_USERNAME }}"
+      DB_PASSWORD: "{{ VAULT_DB_PASSWORD }}"
+      DB_NAME: "{{ VAULT_DB_NAME }}"
 
