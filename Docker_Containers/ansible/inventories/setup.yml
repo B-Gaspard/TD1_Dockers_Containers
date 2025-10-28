@@ -1,0 +1,9 @@
+all:
+ vars:
+   ansible_user: admin
+   ansible_ssh_private_key_file: /mnt/c/Users/gaspa/Desktop/S7/Docker_Containers/Docker_Container_repository/TD1_Dockers_Containers/Docker_Containers/ansible/id_rsa
+
+ children:
+   prod:
+     hosts: gaspard.brom.takima.cloud
+
