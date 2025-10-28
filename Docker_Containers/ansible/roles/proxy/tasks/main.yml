@@ -8,3 +8,5 @@
       - name: my_network
     published_ports:
       - "80:80"
+    env:
+      PAGE_NAME: "app"
