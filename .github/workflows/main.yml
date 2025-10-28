@@ -26,12 +26,8 @@ jobs:
           java-version: 21
 
       - name: Build, test, and analyze with SonarCloud
-        run: mvn -B clean verify sonar:sonar \
-          -Dsonar.projectKey=B-Gaspard_TD1_Dockers_Containers \
-          -Dsonar.organization=b-gaspard \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-          --file Docker_Containers/TP1/simpleapi/pom.xml
+        run: mvn -B clean verify sonar:sonar -Dsonar.projectKey=B-Gaspard_TD1_Dockers_Containers -Dsonar.organization=b-gaspard -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }} --file Docker_Containers/TP1/simpleapi/pom.xml
+
 
   build-and-push-docker-image:
     needs: test-backend
