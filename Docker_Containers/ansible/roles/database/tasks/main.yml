@@ -5,7 +5,7 @@
     state: started
     restart_policy: unless-stopped
     networks:
-      - name: my_network
+      - name: db_network
     env:
       DB_USER: "postgres"
       DB_PASSWORD: "password"

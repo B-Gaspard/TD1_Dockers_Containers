@@ -1,0 +1,4 @@
+Docker_Containers/ansible/github_cd_prod
+Docker_Containers/ansible/github_cd_prod.pub
+Docker_Containers/ansible/github_cd_staging
+Docker_Containers/ansible/github_cd_staging.pub
