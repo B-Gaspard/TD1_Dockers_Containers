@@ -2,75 +2,56 @@
   gather_facts: true
   become: true
 
+  roles:
+    - docker
+    - network
+    - database
+    - app
+    - proxy
+
   tasks:
-    - name: Install Docker
-      apt:
-        name:
-          - docker-ce
-          - docker-ce-cli
-          - containerd.io
+    # Ensure the network exists
+    - name: Ensure Docker network exists
+      docker_network:
+        name: my_network
         state: present
-        update_cache: yes
 
-    # Install prerequisites for Docker
-    - name: Install required packages
-     apt:
-       name:
-         - apt-transport-https
-         - ca-certificates
-         - curl
-         - gnupg
-         - lsb-release
-         - python3-venv
-       state: latest
-       update_cache: yes
+    # Ensure the database container is running and attached to the network
+    - name: Run database container
+      docker_container:
+        name: my_db
+        image: gbrom/tp-devops-database:latest
+        state: started
+        restart_policy: unless-stopped
+        networks:
+          - my_network
+        env:
+          DB_USER: postgres
+          DB_PASSWORD: password
+          DB_NAME: postgres
 
+    # Ensure the backend application container is running and attached to the network
+    - name: Run backend application container
+      docker_container:
+        name: backend_app
+        image: gbrom/tp-devops-simple-api:latest
+        state: started
+        restart_policy: unless-stopped
+        networks:
+          - my_network
+        env:
+          DB_URL: jdbc:postgresql://my_db:5432/postgres
+          DB_USERNAME: postgres
+          DB_PASSWORD: password
 
-   # Add Docker’s official GPG key
-   - name: Add Docker GPG key
-     apt_key:
-       url: https://download.docker.com/linux/debian/gpg
-       state: present
-
-
-   # Set up the Docker stable repository
-   - name: Add Docker APT repository
-     apt_repository:
-       repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_facts['distribution_release'] }} stable"
-       state: present
-       update_cache: yes
-
-
-  # Install Docker
-  - name: Install Docker
-    apt:
-      name: docker-ce
-      state: present
-
-   # Install Python3 and pip3
-   - name: Install Python3 and pip3
-     apt:
-       name:
-         - python3
-         - python3-pip
-       state: present
-
-
-   # Create a virtual environment for Python packages
-   - name: Create a virtual environment for Docker SDK
-     command: python3 -m venv /opt/docker_venv
-     args:
-       creates: /opt/docker_venv  # Only runs if this directory doesn’t exist
-
-
-   # Install Docker SDK for Python in the virtual environment
-   - name: Install Docker SDK for Python in virtual environment
-     command: /opt/docker_venv/bin/pip install docker
-
-
-   # Ensure Docker is running
-   - name: Make sure Docker is running
-     service:
-       name: docker
-       state: started
-     tags: docker
+    # Ensure the HTTPD / proxy container is running and attached to the network
+    - name: Run HTTPD / proxy container
+      docker_container:
+        name: httpd_proxy
+        image: gbrom/tp-devops-http-server:latest
+        state: started
+        restart_policy: unless-stopped
+        networks:
+          - my_network
+        ports:
+          - "80:80"

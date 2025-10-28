@@ -1,0 +1,12 @@
+- name: Run backend application
+  docker_container:
+    name: backend_app
+    image: "gbrom/tp-devops-simple-api:latest"
+    state: started
+    restart_policy: unless-stopped
+    networks:
+      - name: my_network
+    env:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://my_db:5432/postgres"
+      SPRING_DATASOURCE_USERNAME: "postgres"
+      SPRING_DATASOURCE_PASSWORD: "password"

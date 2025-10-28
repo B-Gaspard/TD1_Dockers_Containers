@@ -1,0 +1,12 @@
+- name: Run database container
+  docker_container:
+    name: my_db
+    image: "gbrom/tp-devops-database:latest"
+    state: started
+    restart_policy: unless-stopped
+    networks:
+      - name: my_network
+    env:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "postgres"

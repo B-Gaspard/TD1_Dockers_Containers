@@ -1,0 +1,10 @@
+- name: Run HTTPD / proxy container
+  docker_container:
+    name: httpd_proxy
+    image: "gbrom/tp-devops-http-server:latest"
+    state: started
+    restart_policy: unless-stopped
+    networks:
+      - name: my_network
+    published_ports:
+      - "80:80"
