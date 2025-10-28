@@ -1,11 +1,19 @@
 - hosts: all
- gather_facts: true
- become: true
+  gather_facts: true
+  become: true
 
+  tasks:
+    - name: Install Docker
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+        update_cache: yes
 
- tasks:
-   # Install prerequisites for Docker
-   - name: Install required packages
+    # Install prerequisites for Docker
+    - name: Install required packages
      apt:
        name:
          - apt-transport-https
@@ -33,12 +41,11 @@
        update_cache: yes
 
 
-   # Install Docker
+  # Install Docker
   - name: Install Docker
-      apt:
-        name: docker-ce
-        state: present
-
+    apt:
+      name: docker-ce
+      state: present
 
    # Install Python3 and pip3
    - name: Install Python3 and pip3
