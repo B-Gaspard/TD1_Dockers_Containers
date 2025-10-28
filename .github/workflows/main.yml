@@ -4,7 +4,6 @@ on:
   push:
     branches: [ main, develop ]
   pull_request:
-    branches: [ main, develop ]
 
 jobs:
   test-backend:
@@ -13,11 +12,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: List repo contents (debug)
-        run: |
-          pwd
-          ls -R
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4
@@ -47,19 +41,19 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: Docker_Containers/TP1/simpleapi
-          push: true
+          push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ secrets.DOCKER_USERNAME }}/tp-devops-simple-api:latest
 
       - name: Build image and push database
         uses: docker/build-push-action@v6
         with:
           context: Docker_Containers/TP1
-          push: true
+          push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ secrets.DOCKER_USERNAME }}/tp-devops-database:latest
 
       - name: Build image and push http
         uses: docker/build-push-action@v6
         with:
           context: Docker_Containers/TP1/http-server
-          push: true
+          push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ secrets.DOCKER_USERNAME }}/tp-devops-http-server:latest
