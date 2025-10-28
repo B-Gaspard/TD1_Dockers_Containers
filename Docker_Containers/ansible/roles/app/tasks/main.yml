@@ -1,6 +1,6 @@
 - name: Run backend application
   docker_container:
-    name: backend_app
+    name: simple_api
     image: "gbrom/tp-devops-simple-api:latest"
     state: started
     restart_policy: unless-stopped
